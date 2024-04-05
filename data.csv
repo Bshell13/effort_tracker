@@ -1,21 +1,41 @@
-teacher	name_of_class	block	task	total_students	week_num	min_1	min_2	min_3	min_4	min_5
-shellenberger	geometry	b5	solving_equations	23	1	0	0	0	0	0
-shellenberger	geometry	b5	four_fours	21	2	1	0	0	0	0
-shellenberger	geometry	b5	open_middle	22	3	1	1	2	1	0
-shellenberger	geometry	b5	rebus_puzzles	21	4	1	0	1	0	1
-shellenberger	geometry	b5	logic_puzzles	23	5	0	1	0	0	0
-shellenberger	geometry	w2	solving_equations	23	1	0	0	0	0	0
-shellenberger	geometry	w2	four_fours	22	2	1	1	0	0	0
-shellenberger	geometry	w2	open_middle	22	3	0	1	2	1	2
-shellenberger	geometry	w2	rebus_puzzles	23	4	0	0	1	0	1
-shellenberger	geometry	w2	logic_puzzles	21	5	1	1	2	0	2
-shellenberger	geometry	w3	solving_equations	24	1	0	0	0	0	0
-shellenberger	geometry	w3	four_fours	25	2	2	0	0	0	2
-shellenberger	geometry	w3	open_middle	24	3	1	2	1	2	1
-shellenberger	geometry	w3	rebus_puzzles	24	4	1	1	2	0	1
-shellenberger	geometry	w3	logic_puzzles	23	5	1	0	1	2	2
-shellenberger	geometry	w5	solving_equations	22	1	0	0	0	0	0
-shellenberger	geometry	w5	four_fours	24	2	1	0	0	0	0
-shellenberger	geometry	w5	open_middle	21	3	0	0	3	1	2
-shellenberger	geometry	w5	rebus_puzzles	23	4	1	0	2	1	2
-shellenberger	geometry	w5	logic_puzzles	24	5	0	0	1	2	3
+teacher,name_of_class,block,task,total_students,week_num,min_1,min_2,min_3,min_4,min_5
+shellenberger,geometry,b5,solving_equations,23,1,0,0,0,0,0
+shellenberger,geometry,b5,four_fours,21,2,1,0,0,0,0
+shellenberger,geometry,b5,open_middle,22,3,1,1,2,1,0
+shellenberger,geometry,b5,rebus_puzzles,21,4,1,0,1,0,1
+shellenberger,geometry,b5,logic_puzzles,23,5,0,1,0,0,0
+shellenberger,geometry,w2,solving_equations,23,1,0,0,0,0,0
+shellenberger,geometry,w2,four_fours,22,2,1,1,0,0,0
+shellenberger,geometry,w2,open_middle,22,3,0,1,2,1,2
+shellenberger,geometry,w2,rebus_puzzles,23,4,0,0,1,0,1
+shellenberger,geometry,w2,logic_puzzles,21,5,1,1,2,0,2
+shellenberger,geometry,w3,solving_equations,24,1,0,0,0,0,0
+shellenberger,geometry,w3,four_fours,25,2,2,0,0,0,2
+shellenberger,geometry,w3,open_middle,24,3,1,2,1,2,1
+shellenberger,geometry,w3,rebus_puzzles,24,4,1,1,2,0,1
+shellenberger,geometry,w3,logic_puzzles,23,5,1,0,1,2,2
+shellenberger,geometry,w5,solving_equations,22,1,0,0,0,0,0
+shellenberger,geometry,w5,four_fours,24,2,1,0,0,0,0
+shellenberger,geometry,w5,open_middle,21,3,0,0,3,1,2
+shellenberger,geometry,w5,rebus_puzzles,23,4,1,0,2,1,2
+shellenberger,geometry,w5,logic_puzzles,24,5,0,0,1,2,3
+beckley,geometry,w1,solving_equations,23.7,1,0.4,0,2.4,2.3,3.8
+beckley,geometry,w1,four_fours,24,2,0.4,0,2.8,2.8,4.6
+beckley,geometry,w1,open_middle,24.3,3,0.4,0,3.2,3.3,5.4
+beckley,geometry,w1,rebus_puzzles,24.6,4,0.4,0,3.6,3.8,6.2
+beckley,geometry,w1,logic_puzzles,24.9,5,0.4,0,4,4.3,7
+beckley,geometry,b1,solving_equations,25.2,1,0.4,0,4.4,4.8,7.8
+beckley,geometry,b1,four_fours,25.5,2,0.4,0,4.8,5.3,8.6
+beckley,geometry,b1,open_middle,25.8,3,0.4,0,5.2,5.8,9.4
+beckley,geometry,b1,rebus_puzzles,26.1,4,0.4,0,5.6,6.3,10.2
+beckley,geometry,b1,logic_puzzles,26.4,5,0.4,0,6,6.8,11
+beckley,geometry,b2,solving_equations,26.7,1,0.4,0,6.4,7.3,11.8
+beckley,geometry,b2,solving_equations,27,2,0.4,0,6.8,7.8,12.6
+beckley,geometry,b2,four_fours,27.3,3,0.4,0,7.2,8.3,13.4
+beckley,geometry,b2,open_middle,27.6,4,0.4,0,7.6,8.8,14.2
+beckley,geometry,b2,rebus_puzzles,27.9,5,0.4,0,8,9.3,15
+beckley,geometry,b3,logic_puzzles,28.2,1,0.4,0,8.4,9.8,15.8
+beckley,geometry,b3,solving_equations,28.5,2,0.4,0,8.8,10.3,16.6
+beckley,geometry,b3,four_fours,28.8,3,0.4,0,9.2,10.8,17.4
+beckley,geometry,b3,open_middle,29.1,4,0.4,0,9.6,11.3,18.2
+beckley,geometry,b3,rebus_puzzles,29.4,5,0.4,0,10,11.8,19
