@@ -10,100 +10,92 @@ import random
 import plotly.express as px
 from scipy import stats
 from pathlib import Path
+import statistics as stat
+
+from faicons import icon_svg
+
 
 ui.page_opts(title="PLC+ Math Group 2: Effort Tracker", fillable=True)
 
-# -------------------------------
-# Sidebar
-# Heading
-# Intputs
-# "Block"
-# "Teacher Name"
-# "Week Number"
-# "Minute Number"
-# Links
-# Data
-# -------------------------------
+with ui.sidebar():
+    ui.input_checkbox_group(
+        "teacher",
+        "Teacher",
+        {
+            "shellenberger": "Shellenberger",
+            "beckley": "Beckley",
+            "kear": "Kear",
+            "bergmann": "Bergmann",
+            "shephard": "Shephard",
+            "mcnaney": "McNaney",
+            "kueser": "Kueser",
+        },
+        selected=[
+            "shellenberger",
+        ]
+    )
 
 
+# Fetching data
 
-# -------------------------------
-# Gathering Data
-# First use the random data
-# Either use a google form or just manually enter data
-# Needs to be in CSV
-# Fetch data and input as a DataFrame (pandas)
-# -------------------------------
+file = Path(__file__).parent / "effort_tracker.csv"
+df = pd.read_csv(file)
+
+# Adding a column for average of each record
+df["avg_on_task"] = (1 - (
+        df[["min_1", "min_2", "min_3", "min_4", "min_5"]].mean(axis=1)
+        / df["total_students"])) * 100
+
+# Box to show averages
+with ui.value_box(
+    showcase=icon_svg("sun"),
+    theme="bg-gradient-blue-purple",
+):
+
+    "Averages"
+    
+    @render.text
+    def display_stats():
+        return f"{round(df['avg_on_task'].mean(),2)}"
+
+    "Names"
+
+    @render.text
+    def names():
+        return f"{input.teacher()}"
+
+with ui.layout_columns():
+    with ui.card():
+        ui.card_header("Block")
+
+        @render_plotly
+        def block_plotly():
+            plotly_block = px.bar(
+                df,
+                x=sorted(df["block"].unique()),
+                y=df.groupby(["block"])["avg_on_task"].mean(),
+            )
+            plotly_block.update_layout(
+                xaxis_title="Block", yaxis_title="Average Students on Task (%)"
+            )
+            return plotly_block
+
+    with ui.card():
+        ui.card_header("Task")
+
+        @render_plotly
+        def week_plotly():
+            plotly_task = px.bar(
+                df,
+                x=sorted(df["task"].unique()),
+                y=df.groupby(["task"])["avg_on_task"].mean(),
+                color=filtered_data(),
+            )
+            plotly_task.update_layout(
+                xaxis_title="Task", yaxis_title="Average Students on Task (%)"
+            )
+            return plotly_task
 
 @reactive.calc
-def get_data():
-    file = Path(__file__).parent / "effort_tracker.csv"
-    return pd.read_csv(file)
-
-with ui.navset_card_underline():
-
-    with ui.nav_panel("Data frame"):
-        @render.data_frame
-        def frame():
-            # Give dat() to render.DataGrid to customize the grid
-            return get_data()
-
-    with ui.nav_panel("Table"):
-        @render.table
-        def table():
-            return get_data()
-
-
-# -------------------------------
-# Outputs
-# Valuebox
-# Average Percent on-task
-# Card
-# Data Table
-# Plot: Percent off task vs min
-# Plot: Percent off task vs week
-# Plot: Percent off task vs block
-# -------------------------------
-
-
-
-with ui.navset_pill(id="tab"):
-    with ui.nav_panel("Block"):
-        with ui.sidebar(open="open"):
-            ui.input_checkbox_group("block", "Block",
-                {
-                    "b1": "Blue 1",
-                    "b2": "Blue 2",
-                    "b3": "Blue 3",
-                    "b5": "Blue 5",
-                    "w1": "White 1",
-                    "w2": "White 2",
-                    "w3": "White 3",
-                    "w5": "White 5",
-                },
-            )
-
-    with ui.nav_panel("Week"):
-        with ui.sidebar(open="open"):
-            ui.input_checkbox_group("week", "Week Number",
-                {
-                    "1": "Week 1",
-                    "2": "Week 2",
-                    "3": "Week 3",
-                    "4": "Week 4",
-                    "5": "Week 5",
-                }
-            )
-
-
-    with ui.nav_panel("task"):
-        with ui.sidebar(open="open"):
-            ui.input_checkbox_group("task", "Type of Task",
-                {
-                    "solving_equations": "Solving Equations",
-                    "four_fours": "Four Four's",
-                    "open_middle": "Open Middle Math",
-                    "rebus_puzzles": "Rebus Puzzles",
-                    "logic_puzzles": "Logic Puzzles",
-                }
-            )
+def filtered_data():
+    return df[df["teacher"].isin(input.teacher())]
