@@ -6,7 +6,6 @@ from shinywidgets import render_plotly
 
 # Python imports
 import pandas as pd
-import random
 import plotly.express as px
 from scipy import stats
 from pathlib import Path
@@ -22,16 +21,16 @@ with ui.sidebar():
         "teacher",
         "Teacher",
         {
-            "shellenberger": "Shellenberger",
             "beckley": "Beckley",
-            "kear": "Kear",
             "bergmann": "Bergmann",
-            "shephard": "Shephard",
-            "mcnaney": "McNaney",
+            "kear": "Kear",
             "kueser": "Kueser",
+            "mcnaney": "McNaney",
+            "shellenberger": "Shellenberger",
+            "shephard": "Shephard",
         },
         selected=[
-            "shellenberger",
+            "beckley",
         ]
     )
 
@@ -46,56 +45,89 @@ df["avg_on_task"] = (1 - (
         df[["min_1", "min_2", "min_3", "min_4", "min_5"]].mean(axis=1)
         / df["total_students"])) * 100
 
-# Box to show averages
-with ui.value_box(
-    showcase=icon_svg("sun"),
-    theme="bg-gradient-blue-purple",
-):
-
-    "Averages"
+with ui.layout_columns():
+    with ui.value_box(
+        showcase=icon_svg("school"),
+        theme="bg-blue",
+    ):
     
-    @render.text
-    def display_stats():
-        return f"{round(df['avg_on_task'].mean(),2)}"
+        "Average Percent of Students On-Task"
+        # Average Number of Students recoreded On-Task.
+        @render.text
+        def display_stats():
+            data_teacher = filtered_data_teacher()
+            return f"{round(data_teacher['avg_on_task'].mean(),2)} %"
+    
+        "Average Total Number of Students Per Class"
+        # Average Number of Students recoreded during implementation.
+        @render.text
+        def names():
+            data_teacher = filtered_data_teacher()
+            return f"{round(data_teacher['total_students'].mean(), 0)}"
 
-    "Names"
+    with ui.card():
+        ui.card_header("Week")
 
-    @render.text
-    def names():
-        return f"{input.teacher()}"
+        # Render bar plot of percent on task students per week
+        @render_plotly
+        def week_plotly():
+            plotly_week = px.line(
+                filtered_data_teacher(),
+                x=sorted(df["week_num"].unique()),
+                y=df.groupby(["week_num"])["avg_on_task"].mean()
+            )
+            plotly_week.update_layout(
+                xaxis_title="Week",
+                yaxis_title="Average Students on Task (%)"
+            )
+            plotly_week.update_traces(
+                marker_color='dodgerblue'
+            )
+            return plotly_week
 
 with ui.layout_columns():
     with ui.card():
         ui.card_header("Block")
 
+        # Render bar plot of percent on task students per block
         @render_plotly
         def block_plotly():
             plotly_block = px.bar(
-                df,
+                filtered_data_teacher(),
                 x=sorted(df["block"].unique()),
                 y=df.groupby(["block"])["avg_on_task"].mean(),
             )
             plotly_block.update_layout(
-                xaxis_title="Block", yaxis_title="Average Students on Task (%)"
+                xaxis_title="Block",
+                yaxis_title="Average Students on Task (%)"
+            )
+            plotly_block.update_traces(
+                marker_color='dodgerblue'
             )
             return plotly_block
 
     with ui.card():
         ui.card_header("Task")
 
+        # Render bar plot of percent on task students per task
         @render_plotly
-        def week_plotly():
+        def task_plotly():
             plotly_task = px.bar(
-                df,
+                filtered_data_teacher(),
                 x=sorted(df["task"].unique()),
                 y=df.groupby(["task"])["avg_on_task"].mean(),
-                color=filtered_data(),
             )
             plotly_task.update_layout(
-                xaxis_title="Task", yaxis_title="Average Students on Task (%)"
+                xaxis_title="Task",
+                yaxis_title="Average Students on Task (%)"
+            )
+            plotly_task.update_traces(
+                marker_color='dodgerblue'
             )
             return plotly_task
 
+
+
 @reactive.calc
-def filtered_data():
+def filtered_data_teacher():
     return df[df["teacher"].isin(input.teacher())]
