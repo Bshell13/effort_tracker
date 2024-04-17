@@ -51,12 +51,7 @@ df["avg_on_task"] = (1 - (
         df[["min_1", "min_2", "min_3", "min_4", "min_5"]].mean(axis=1)
         / df["total_students"])) * 100
 
-# with ui.card():
-#     @render.data_frame  
-#     def penguins_df():
-#         return render.DataGrid(filtered_data_teacher())
 
-#     "Data Table"
 
 with ui.layout_columns():
     with ui.value_box(
@@ -109,7 +104,7 @@ with ui.layout_columns():
             filtered = filtered_data_teacher()
             plotly_block = px.bar(
                 filtered,
-                x=sorted(df["block"].unique()),
+                x=sorted(filtered["block"].unique()),
                 y=filtered.groupby(["block"])["avg_on_task"].mean(),
             )
             plotly_block.update_layout(
