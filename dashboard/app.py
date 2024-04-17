@@ -95,26 +95,44 @@ with ui.layout_columns():
             return plotly_week
 
 with ui.layout_columns():
-    with ui.card():
-        ui.card_header("Block")
+    with ui.navset_card_tab():
+        with ui.nav_panel("Block"):
+            # Render bar plot of percent on task students per block
+            @render_plotly
+            def block_plotly():
+                filtered = filtered_data_teacher()
+                plotly_block = px.bar(
+                    filtered,
+                    x=sorted(filtered["block"].unique()),
+                    y=filtered.groupby(["block"])["avg_on_task"].mean(),
+                )
+                plotly_block.update_layout(
+                    xaxis_title="Block",
+                    yaxis_title="Average Students on Task (%)"
+                )
+                plotly_block.update_traces(
+                    marker_color='dodgerblue'
+                )
+                return plotly_block
 
-        # Render bar plot of percent on task students per block
-        @render_plotly
-        def block_plotly():
-            filtered = filtered_data_teacher()
-            plotly_block = px.bar(
-                filtered,
-                x=sorted(filtered["block"].unique()),
-                y=filtered.groupby(["block"])["avg_on_task"].mean(),
-            )
-            plotly_block.update_layout(
-                xaxis_title="Block",
-                yaxis_title="Average Students on Task (%)"
-            )
-            plotly_block.update_traces(
-                marker_color='dodgerblue'
-            )
-            return plotly_block
+        with ui.nav_panel("Course"):
+            # Render bar plot of percent on task students per block
+            @render_plotly
+            def course_plotly():
+                filtered = filtered_data_teacher()
+                plotly_course = px.bar(
+                    filtered,
+                    x=sorted(filtered["name_of_class"].unique()),
+                    y=filtered.groupby(["name_of_class"])["avg_on_task"].mean(),
+                )
+                plotly_course.update_layout(
+                    xaxis_title="Course",
+                    yaxis_title="Average Students on Task (%)"
+                )
+                plotly_course.update_traces(
+                    marker_color='dodgerblue'
+                )
+                return plotly_course
 
     with ui.card():
         ui.card_header("Task")
