@@ -7,12 +7,7 @@ from shinywidgets import render_plotly
 # Python imports
 import pandas as pd
 import plotly.express as px
-from scipy import stats
 from pathlib import Path
-import statistics as stat
-
-from faicons import icon_svg
-
 
 ui.page_opts(title="PLC+ Math Group 2: Effort Tracker", fillable=True)
 
