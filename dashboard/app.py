@@ -9,11 +9,11 @@ import pandas as pd
 import plotly.express as px
 from pathlib import Path
 
-from faicons import icons_svg
+from faicons import icon_svg
 
 ui.page_opts(title="PLC+ Math Group 2: Effort Tracker", fillable=True)
 
-with ui.sidebar():
+with ui.sidebar(open='closed'):
     ui.input_checkbox_group(
         "teacher",
         "Teacher",
